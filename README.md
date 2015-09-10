@@ -47,6 +47,9 @@ Now to activate:
 
     $ sudo sysctl -p
 
+There is more [documentation](https://www.sitola.cz/igrid/index.php/Set_Jumbo_Frames_%28Linux%29) 
+on the wiki that suggests something else...
+
 ## Ping
 In order to test if the MTU of 9000 is working properly, there is a simple
 test to perform:
@@ -70,6 +73,87 @@ The three VMs have the following roles:
     10.10.10.1  sender
     10.10.10.2  transceiver
     10.10.10.3  receiver
+
+# Performance Testing
+For uncompressed 4K video at 24fps we need about 3.6GBit/s. So we need to be
+able to get up to this speed over the private network. See 
+[this](https://www.sitola.cz/igrid/index.php/UltraGrid_FAQ#Estimating_available_bandwidth) 
+wiki page for downloading the modified `iperf`.
+
+On the `sender`:
+
+    $ ./iperf-2.0.4/src/iperf -u -s -l 8500 -i 1 -w 16M
+
+On the `transceiver`:
+
+    $ ./iperf-2.0.4/src/iperf -u -c 10.10.10.1 -l 8500 -i 1 -w 16M -b 4G -d
+
+Not that we use `4G` here as we want to be able to send roughly 4GBit/s.
+
+It doesn't seem to get reliable 4G though, and also have some loss:
+
+    ------------------------------------------------------------
+    Server listening on UDP port 5001
+    Receiving 8500 byte datagrams
+    UDP buffer size: 32.0 MByte (WARNING: requested 16.0 MByte)
+    ------------------------------------------------------------
+    ------------------------------------------------------------
+    Client connecting to 10.10.10.1, UDP port 5001
+    Sending 8500 byte datagrams
+    UDP buffer size: 16.0 MByte
+    ------------------------------------------------------------
+    [  4] local 10.10.10.2 port 57579 connected with 10.10.10.1 port 5001
+    [  3] local 10.10.10.2 port 5001 connected with 10.10.10.1 port 59603
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  0.0- 1.0 sec    432 MBytes  3.63 Gbits/sec  0.009 ms  610/53928 (1.1%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  0.0- 1.0 sec    282 MBytes  2.37 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  1.0- 2.0 sec    407 MBytes  3.42 Gbits/sec  0.008 ms  381/50640 (0.75%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  1.0- 2.0 sec    394 MBytes  3.31 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  2.0- 3.0 sec    381 MBytes  3.20 Gbits/sec  0.010 ms 4919/51908 (9.5%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  2.0- 3.0 sec    368 MBytes  3.08 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  3.0- 4.0 sec    428 MBytes  3.59 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  3.0- 4.0 sec    412 MBytes  3.46 Gbits/sec  0.006 ms 1052/51917 (2%)
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  4.0- 5.0 sec    411 MBytes  3.45 Gbits/sec  0.008 ms  890/51582 (1.7%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  4.0- 5.0 sec    397 MBytes  3.33 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  5.0- 6.0 sec    403 MBytes  3.38 Gbits/sec  0.009 ms  476/50239 (0.95%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  5.0- 6.0 sec    424 MBytes  3.55 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  6.0- 7.0 sec    388 MBytes  3.26 Gbits/sec  0.003 ms  556/48469 (1.1%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  6.0- 7.0 sec    380 MBytes  3.19 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  7.0- 8.0 sec    384 MBytes  3.22 Gbits/sec  0.010 ms 1902/49222 (3.9%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  7.0- 8.0 sec    348 MBytes  2.92 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  8.0- 9.0 sec    419 MBytes  3.52 Gbits/sec  0.003 ms  210/51906 (0.4%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  8.0- 9.0 sec    407 MBytes  3.41 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  9.0-10.0 sec    409 MBytes  3.43 Gbits/sec  0.009 ms 1455/51927 (2.8%)
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  9.0-10.0 sec    383 MBytes  3.21 Gbits/sec
+    [ ID] Interval       Transfer     Bandwidth
+    [  4]  0.0-10.0 sec  3.72 GBytes  3.18 Gbits/sec
+    [  4] Sent 470046 datagrams
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  3]  0.0-10.0 sec  3.95 GBytes  3.39 Gbits/sec  5.006 ms 12450/511740 (2.4%)
+    [  3]  0.0-10.0 sec  1 datagrams received out-of-order
+    [  4] Server Report:
+    [ ID] Interval       Transfer     Bandwidth       Jitter   Lost/Total Datagrams
+    [  4]  0.0-10.0 sec  3.62 GBytes  3.10 Gbits/sec  2.130 ms 12378/470045 (2.6%)
+    [  4]  0.0-10.0 sec  1 datagrams received out-of-order
 
 # UltraGrid
 I used the `git` version of UltraGrid from 
