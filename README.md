@@ -33,6 +33,10 @@ Disable the firewall:
 
 For some reason, we need to reboot to get rid of the firewall completely.
 
+### Ubuntu with GL
+
+    $ sudo apt-get install mesa-common-dev libglew-dev freeglut3-dev
+
 ## Network Buffers
 
 ### New
