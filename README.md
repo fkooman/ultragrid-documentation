@@ -16,7 +16,7 @@ CloudSigma dashboard). You may need to stop all servers and start them again.
 We install some basic packages:
 
     $ sudo dnf -y install fedora-packager make autoconf automake gcc \
-        gcc-c++ NetworkManager-tui vim ImageMagick
+        gcc-c++ NetworkManager-tui vim ImageMagick iftop
 
 Also install RPM Fusion repository (for ffmpeg/libavcodec support):
 
@@ -34,6 +34,15 @@ Disable the firewall:
 For some reason, we need to reboot to get rid of the firewall completely.
 
 ## Network Buffers
+
+### New
+It seems just setting the following is enough as well:
+
+    net.core.rmem_max=18247680
+
+### Old
+
+**USE NEW ABOVE**
 We need to modify the network buffers (on all machines). Modify 
 `/etc/sysctl.conf` and add the following:
 
