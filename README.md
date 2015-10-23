@@ -220,8 +220,11 @@ There are three scripts, one for the sender, the transceiver and the receiver.
     #LIMIT=auto
     LIMIT=unlimited
 
-    #FILTER=
-    FILTER="--capture-filter logo:surfnet.pam:0:0"
+    FILTER=
+    #FILTER="--capture-filter logo:surfnet.pam:0:0"
+    #FILTER="--capture-filter text:foo"
+    #FILTER="--capture-filter blank:50:50:500:500:black"
+    #FILTER="--capture-filter grayscale"
 
     $HD_RUM $FILTER 32M 5006 -c $COMPRESSION -m $MTU -l $LIMIT -P 5006 $TARGET
 
