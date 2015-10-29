@@ -35,7 +35,7 @@ For some reason, we need to reboot to get rid of the firewall completely.
 
 ### Ubuntu with GL
 
-    $ sudo apt-get install mesa-common-dev libglew-dev freeglut3-dev
+    $ sudo apt-get install build-essential git automake autoconf mesa-common-dev libglew-dev freeglut3-dev
 
 ## Network Buffers
 
@@ -225,6 +225,8 @@ There are three scripts, one for the sender, the transceiver and the receiver.
     #FILTER="--capture-filter text:foo"
     #FILTER="--capture-filter blank:50:50:500:500:black"
     #FILTER="--capture-filter grayscale"
+    #FILTER="--capture-filter flip"
+    #FILTER="--capture-filter mirror"
 
     $HD_RUM $FILTER 32M 5006 -c $COMPRESSION -m $MTU -l $LIMIT -P 5006 $TARGET
 
@@ -236,7 +238,10 @@ There are three scripts, one for the sender, the transceiver and the receiver.
     #MTU=1500
     MTU=8500
 
-    $UV -d dummy -m $MTU -P 5006
+    DISP=dummy
+    #DISP=gl
+
+    $UV -d $DISP -m $MTU -P 5006
 
 # Logo
 The transceiver can add a logo to the image. This needs to be in PAM format. I 
