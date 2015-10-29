@@ -38,30 +38,14 @@ For some reason, we need to reboot to get rid of the firewall completely.
     $ sudo apt-get install build-essential git automake autoconf mesa-common-dev libglew-dev freeglut3-dev
 
 ## Network Buffers
-
-### New
-It seems just setting the following is enough as well:
-
-    net.core.rmem_max=18247680
-
-### Old
-
-**USE NEW ABOVE**
-We need to modify the network buffers (on all machines). Modify 
+We need to modify the network buffers (on all machines). Modify
 `/etc/sysctl.conf` and add the following:
 
-    # Extended network buffers for UltraGrid
-    net.core.wmem_max = 33554432
-    net.core.wmem_default = 33554432
-    net.core.rmem_max = 33554432
-    net.core.rmem_default = 33554432
+    net.core.rmem_max=18247680
 
 Now to activate:
 
     $ sudo sysctl -p
-
-There is more [documentation](https://www.sitola.cz/igrid/index.php/Set_Jumbo_Frames_%28Linux%29) 
-on the wiki that suggests something else...
 
 ## Ping
 In order to test if the MTU of 9000 is working properly, there is a simple
