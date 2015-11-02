@@ -35,7 +35,7 @@ For some reason, we need to reboot to get rid of the firewall completely.
 
 ### Ubuntu with GL
 
-    $ sudo apt-get install build-essential git automake autoconf mesa-common-dev libglew-dev freeglut3-dev
+    $ sudo apt-get install build-essential git automake autoconf mesa-common-dev libglew-dev freeglut3-dev libsdl1.2-dev
 
 ## Network Buffers
 We need to modify the network buffers (on all machines). Modify
