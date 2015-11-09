@@ -341,3 +341,11 @@ Now you can convert it to PAM:
     receiver.sh: line 7:   881 Segmentation fault      (core dumped) $UV -d dummy -m $MTU -P 5006
 
     ...
+
+# Coredump
+
+    $ ulimit -c unlimited
+    $ ls /var/lib/systemd/coredump
+
+
+
