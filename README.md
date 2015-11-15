@@ -353,3 +353,22 @@ Or:
 
     $ ulimit -c unlimited
     $ ls /var/lib/systemd/coredump
+
+# NAT rules
+On all the transceivers:
+
+    #!/bin/sh
+
+    sudo iptables -F
+    sudo iptables -F -t nat
+    sudo conntrack --flush
+
+    sudo sysctl -w net.ipv4.conf.all.route_localnet=1
+
+    # enable DNAT
+    sudo iptables -t nat -A PREROUTING -p udp --dport 5006 -d 10.20.30.74 -j DNAT --to 127.0.0.1:5006
+
+    # set static ARP
+    sudo arp -s 10.20.30.74 00:60:dd:46:13:ae
+
+
