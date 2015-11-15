@@ -361,7 +361,6 @@ On all the transceivers:
 
     sudo iptables -F
     sudo iptables -F -t nat
-    sudo conntrack --flush
 
     sudo sysctl -w net.ipv4.conf.all.route_localnet=1
 
@@ -370,5 +369,7 @@ On all the transceivers:
 
     # set static ARP
     sudo arp -s 10.20.30.74 00:60:dd:46:13:ae
+
+    sudo conntrack --flush
 
 
