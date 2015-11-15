@@ -343,9 +343,13 @@ Now you can convert it to PAM:
     ...
 
 # Coredump
+Put:
+
+    *          soft    core      unlimited
+
+In `/etc/security/limits.d/30-core.conf`.
+
+Or: 
 
     $ ulimit -c unlimited
     $ ls /var/lib/systemd/coredump
-
-
-
