@@ -154,8 +154,10 @@ It doesn't seem to get reliable 4G though, and also have some loss:
     [  4]  0.0-10.0 sec  1 datagrams received out-of-order
 
 # UltraGrid
-I used the `git` version of UltraGrid from 
-`http://seth.ics.muni.cz/git/ultragrid.git` (the `master` branch).
+Clone the repository:
+
+    $ git clone http://seth.ics.muni.cz/git/ultragrid.git
+    $ git checkout test-no-ssrc-change
 
 To compile UltraGrid, use the following:
 
