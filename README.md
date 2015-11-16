@@ -34,9 +34,13 @@ Disable the firewall:
 
 For some reason, we need to reboot to get rid of the firewall completely.
 
+### Ubuntu/Debian
+
+    $ sudo apt-get install build-essential git automake autoconf libsdl1.2-dev zip conntrack
+
 ### Ubuntu with GL
 
-    $ sudo apt-get install build-essential git automake autoconf mesa-common-dev libglew-dev freeglut3-dev libsdl1.2-dev zip
+    $ sudo apt-get install mesa-common-dev libglew-dev freeglut3-dev
 
 ## Network Buffers
 We need to modify the network buffers (on all machines). Modify
@@ -182,7 +186,7 @@ There are three scripts, one for the sender, the transceiver and the receiver.
     #COMPRESSION=libavcodec:codec=MJPEG
     #COMPRESSION=libavcodec:codec=H.264
 
-    TARGET=10.10.10.2
+    TARGET=10.20.30.74
 
     #MTU=1500
     MTU=8500
@@ -201,7 +205,7 @@ There are three scripts, one for the sender, the transceiver and the receiver.
     #COMPRESSION=libavcodec:codec=MJPEG
     #COMPRESSION=libavcodec:codec=H.264
 
-    TARGET=10.10.10.3
+    TARGET=10.20.30.74
     
     #MTU=1500
     MTU=8500
