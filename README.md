@@ -156,7 +156,9 @@ It doesn't seem to get reliable 4G though, and also have some loss:
 # UltraGrid
 Clone the repository:
 
+    $ cd $HOME
     $ git clone http://seth.ics.muni.cz/git/ultragrid.git
+    $ cd ultragrid    
     $ git checkout test-no-ssrc-change
 
 To compile UltraGrid, use the following:
