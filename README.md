@@ -17,7 +17,7 @@ We install some basic packages:
 
     $ sudo dnf -y install fedora-packager make autoconf automake gcc \
         gcc-c++ NetworkManager-tui vim ImageMagick ImageMagick-devel iftop \
-	opencv-devel
+	opencv-devel conntrack-tools
 
 Also install RPM Fusion repository (for ffmpeg/libavcodec support):
 
